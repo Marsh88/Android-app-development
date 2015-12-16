@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/main"
+    tools:context=".MainActivity"
+    android:measureAllChildren="false">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/Budget"
+        android:layout_gravity="center"
+        android:text="0"/>
+
+    <Button
+        android:layout_gravity="left|bottom"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_height="wrap_content"
+        android:text="Decrease budget By"
+        android:id="@+id/decrease"
+        android:layout_width="wrap_content"
+        android:padding="5dp"
+        android:onClick="decrease_By"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_height="wrap_content"
+        android:text="Increase Budget by"
+        android:id="@+id/increase"
+        android:padding="5dp"
+        android:layout_gravity="right|bottom"
+        android:onClick="increase_By"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="£"
+        android:id="@+id/currency"
+        android:layout_gravity="left|center"/>
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/inputValue"
+            android:layout_marginBottom="41dp"
+            android:hint="how much to change by"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>
