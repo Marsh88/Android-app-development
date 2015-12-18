@@ -1,65 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+    android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/main"
-    tools:context=".MainActivity"
-    android:measureAllChildren="false">
+    android:measureAllChildren="false"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/Budget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="0"/>
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
-        android:layout_gravity="left|bottom"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_height="wrap_content"
-        android:text="Decrease budget By"
         android:id="@+id/decrease"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:onClick="decrease_By"
         android:padding="5dp"
-        android:onClick="decrease_By"/>
+        android:text="Decrease budget By" />
 
     <Button
-        android:layout_width="wrap_content"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_height="wrap_content"
-        android:text="Increase Budget by"
         android:id="@+id/increase"
-        android:padding="5dp"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
-        android:onClick="increase_By"/>
+        android:onClick="increase_By"
+        android:padding="5dp"
+        android:text="Increase Budget by" />
 
     <TextView
+        android:id="@+id/currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="left|center"
         android:text="£"
-        android:id="@+id/currency"
-        android:layout_gravity="left|center"/>
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reset"
+        android:id="@+id/reset"
+        android:onClick="Reset"
+        android:shape="oval"
+        android:layout_gravity="start|top" />
 
     <RelativeLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <EditText
+            android:id="@+id/inputValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:id="@+id/inputValue"
-            android:layout_marginBottom="41dp"
-            android:hint="how much to change by"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="41dp"
+            android:ems="10"
+            android:hint="how much to change by"
+            android:inputType="numberDecimal" />
+
+
 
 
     </RelativeLayout>
