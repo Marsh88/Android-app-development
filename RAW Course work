@@ -1,0 +1,299 @@
+A202SGI Android App Development
+
+Name: Toby Marshall
+
+Student Id: 6054931
+
+GitHub: https://github.com/Marsh88/Android-app-development 
+
+BitBucket: https://bitbucket.org/Marsha88/android-app-development/src
+
+The full code can be found at these two locations with the import parts
+
+Word count (minus title page and references):1487
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+App Idea
+The idea for the app created for this course work was to create a simple budgeting app. This was designed to be more of a week-to-week or day-to-day budgeting app for small things, mainly aimed at students whose weekly budget is normally spent on a few things and so a simple budgeting system would suit them .
+To design this, first existing app were looked at on the Google play app page .(Google 2015)Looking at the Google play store at those apps classified as budget app shows that most of these apps are aimed at household budgets, dealing with monetary values in the thousands and spread across many bills. For example, My Budget Book (OneTwoApps, 2015) says in its description “to get an idea of your expenses over the next couple of months and see how much money you have available to spend. “This is generally aimed towards large families that need to plan and deal with large budgets, meaning most of the features are useless for someone wanting a week-to-week budgeting app that just shows how much they can spend. Another App under budgeting on the play store is the You Need A Budget app (YouNeedABudget.com, 2015) which on the description  says “Multiple Android devices can sync with the same budget, making it easy for an entire household to stay on the same budget! (You can also have iPhones, iPads, iPods, etc. That app is found in Apple's App Store.)” which is again extra features and a different market (household) to what this app is aiming towards, which is simple  how much you have got to spend and taking away from it as the week goes on.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+App Code and Design
+The code for the XML (the interface  i.e. the part which the user see visually) looks like this :
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:measureAllChildren="false"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/Budget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/decrease"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:onClick="decrease_By"
+        android:padding="5dp"
+        android:text="Decrease budget By" />
+
+    <Button
+        android:id="@+id/increase"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:onClick="increase_By"
+        android:padding="5dp"
+        android:text="Increase Budget by" />
+
+    <TextView
+        android:id="@+id/currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:text="£"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reset"
+        android:id="@+id/reset"
+        android:onClick="Reset"
+        android:shape="oval"
+        android:layout_gravity="start|top" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/inputValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="41dp"
+            android:ems="10"
+            android:hint="how much to change by"
+            android:inputType="numberDecimal" />
+    </RelativeLayout>
+
+
+</FrameLayout>
+
+This when implement will give the user this image on their screen when 
+viewing it:
+
+As is visible from this picture, this XML creates 3 buttons , 1 EditText  and 2 TextView Widgets (though it is hard to distinguish between the two of them due to no boundaries, they are the £ and the 0.) The main body of the widgets use the Frame layout to position themselves. The reason for the use of frame layout is that it always easy set up of the widgets which no matter the size of the screen will be positioned at the same places, allowing a good amount of devices to use it. The decrease and increase buttons both have padding area around it (area that no overlap may occur) due to when the UI was tested on very small devices those two buttons would merge, so a padding was introduced. The only widget not to use the frame layout was the EditText widget that is on top of the increase and decrease buttons. This was because frame does not allow the stacking of widgets like this and each widget takes up its own frame, at the same height to those horizontal to it and same distance across to those vertical.
+
+
+
+The Java code defines what the app actually does. For example the On Click attributes of the buttons in the last part actually do nothing on their own, but rather call the click function from the Java code. The  main body   Java code looks like this:
+
+
+public class MainActivity extends AppCompatActivity {
+    public static final String budgetKey = "budgetKey";
+    TextView budget;
+    EditText inputvalue;
+    SharedPreferences sharedPreferences;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        sharedPreferences = getSharedPreferences("MySharedPreMain", Context.MODE_PRIVATE);
+        budget = (TextView) findViewById(R.id.Budget);
+        inputvalue = (EditText) findViewById(R.id.inputValue);
+        if (sharedPreferences.contains(budgetKey)) {
+            budget.setText(sharedPreferences.getString(budgetKey, ""));
+        }
+        /*this is the creation function. when it runs budget is defined by finding it and assigning it.
+        the same is done for the input value
+        it then checks if the data already exists for and replaces it if it is. This means even if the app is closed it retains teh data
+         */
+
+
+    }
+
+    ;
+
+    public void increase_By(View v) {
+
+
+        try {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            String input = budget.getText().toString();
+            String input1 = inputvalue.getText().toString();
+            int temp = Integer.parseInt(input);
+            int temp2 = Integer.parseInt(input1);
+            int result = temp + temp2;
+            String result1 = Integer.toString(result);
+            editor.putString(budgetKey, result1);
+            editor.commit();
+            budget.setText(result1);
+            inputvalue.setText("");
+            Toast.makeText(this, "Budget updated", Toast.LENGTH_LONG).show();
+            return;
+        } catch (Exception e) {
+            Toast.makeText(this, "Please put a value to input in first", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void decrease_By(View v) {
+        try {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            String input3 = budget.getText().toString();
+            String input4 = inputvalue.getText().toString();
+            int temp3 = Integer.parseInt(input3);
+            int temp4 = Integer.parseInt(input4);
+            int result3 = temp3 - temp4;
+            String result4 = Integer.toString(result3);
+            editor.putString(budgetKey, result4);
+            editor.commit();
+            budget.setText(result4);
+            inputvalue.setText("");
+            Toast.makeText(this, "Budget updated", Toast.LENGTH_LONG).show();
+            return;
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Please put a value to input in first", Toast.LENGTH_LONG).show();
+        }
+    }
+    /*
+    these two functions activate on the click of their respective buttons. When clicked they try to add or take away from the budget value
+    if no value was in putted however, it tells the user to input one. This was to stop the app from crashing when the inputValue was None
+     */
+    public void Reset(View v){
+        String base = "0";
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(budgetKey, base );
+        editor.commit();
+        budget.setText(base);
+    }
+    //This final onclick function will reset the budget value when clicked.
+
+     
+}
+
+
+
+
+
+
+
+
+While fairly simple, this code is also very stable when run with the app, being hard to crash. It is made up of an OnCreate function (this runs when the code is first started and checks if another budget value already exists, if it does, replace it with the old one and put it in the XML TextView file so the user can see it.) The other 3 all run when a button is clicked. The first two (increase and decrease) take the input from the EditText widget, covert that and the current budget to integers, add them or take them away depending if it is increase or decrease, then replace the current Budget with the new one while emptying the EditText widget. The final one resets budget to 0 . 
+
+Data persistence is kept by the use of Shared preferences, which stores the data as a key pair which can be edited and then when the android app is ran and it goes through its creation cycle, it checks to see if the pair exists and adds it if it does. These screen shots shows that the data is contained:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Conclusion
+
+Overall, despite it being a fairly simple system, it works well at what it does and its simplicity helps that. Without lots of extra features the app is fairly streamlined and so it easy to pick up and run and as shown has data persistence as well as due to its simplicity, the ability to run on many different hardware with ease (though it does look a bit empty on very large screens)  
+
+
+
+Developments in the future
+
+There are a few things that could be done to  improve this app. Firstly, the ability to localise the app would good. This could be done with Java (having the Java file change the the currency TextView widget to whatever the currency is) or by having manly localised XML files for each currency. Another thing that could be done is the use of fragments. Instead of the EditText to input how much to go up or down by, when the button is pressed a dialog fragment is created with the EditText which relays the information to the main class which then does the calculation. This would tidy up the UI a bit as well as  make the UI flow better when navigated. The reset button could also when clicked, rather then reset to 0, reset to the base budget (which could be changed in a options toolbar) that if no base budget has been set creates a dialog fragment telling the user to input one. This could be done by a try/catch method , trying to retrieve the stored data first then if fails does the dialog fragment. A final thing that could be implemented is a log of every time money has been added or removed. This could be done by saving the data each time it is committed to a separate file or even in something like SQLite which could then be retrieved on request and put into a fragment to view on request. SQLite is “SQLite is an embedded SQL database engine” so doesn't use separate servers so can be used offline and is written to disk.(SQLite,2015)
+
+
+
+
+
+
+
+References
+
+OneTwoApps (2015) My Budget Book [Online] Available from: <https://play.google.com/store/apps/details?id=com.onetwoapps.mh > [Accessed 17th December 2015]
+
+YouNeedABudget.com(2015) You Need A Budget [Online] Available from: <https://play.google.com/store/apps/details?id=com.youneedabudget.ynab.app.market> [Accessed 18th December 2015]
+
+Google (2015)Google play store[Online] Available from: <https://play.google.com/store> [Accessed 17th December 2015]
+
+SQLite(2015) About SQLite [Online] Available from: <http://www.sqlite.org/about.html> [Accessed 20th December 2015]
