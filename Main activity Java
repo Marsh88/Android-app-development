@@ -1,4 +1,4 @@
-package com.example.tobymarshall.budgetingapp;
+package com.example.toby.budgetapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,59 +15,86 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String budgetKey = "budgetKey";
     TextView budget;
     EditText inputvalue;
-    public static final String budgetKey= "budgetKey";
     SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
         sharedPreferences = getSharedPreferences("MySharedPreMain", Context.MODE_PRIVATE);
         budget = (TextView) findViewById(R.id.Budget);
         inputvalue = (EditText) findViewById(R.id.inputValue);
-        if (sharedPreferences.contains(budgetKey)){
-            budget.setText(sharedPreferences.getString(budgetKey,""));
+        if (sharedPreferences.contains(budgetKey)) {
+            budget.setText(sharedPreferences.getString(budgetKey, ""));
         }
+        /*this is the creation function. when it runs budget is definded by finding it and assigning it.
+        the same is done for the input value
+        it then checks if the data already exists for and replaces it if it is. This means even if the app is closed it retains teh data
+         */
 
 
+    }
 
-    };
+    ;
 
-    public void increase_By (View v){
+    public void increase_By(View v) {
 
+
+        try {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             String input = budget.getText().toString();
             String input1 = inputvalue.getText().toString();
             int temp = Integer.parseInt(input);
-            int temp2 =Integer.parseInt(input1);
+            int temp2 = Integer.parseInt(input1);
             int result = temp + temp2;
-           String result1 = Integer.toString(result);
+            String result1 = Integer.toString(result);
             editor.putString(budgetKey, result1);
             editor.commit();
             budget.setText(result1);
             inputvalue.setText("");
             Toast.makeText(this, "Budget updated", Toast.LENGTH_LONG).show();
-        return;
-
+            return;
+        } catch (Exception e) {
+            Toast.makeText(this, "Please put a value to input in first", Toast.LENGTH_LONG).show();
         }
 
-    public void decrease_By (View v){
+    }
 
+    public void decrease_By(View v) {
+        try {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            String input3 = budget.getText().toString();
+            String input4 = inputvalue.getText().toString();
+            int temp3 = Integer.parseInt(input3);
+            int temp4 = Integer.parseInt(input4);
+            int result3 = temp3 - temp4;
+            String result4 = Integer.toString(result3);
+            editor.putString(budgetKey, result4);
+            editor.commit();
+            budget.setText(result4);
+            inputvalue.setText("");
+            Toast.makeText(this, "Budget updated", Toast.LENGTH_LONG).show();
+            return;
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Please put a value to input in first", Toast.LENGTH_LONG).show();
+        }
+    }
+    /*
+    these two functions activate on the click of their respective buttons. When clicked they try to add or take away from the budget value
+    if no value was inputted however, it tells the user to input one. This wa to stop the app from crashing when the inputValue was None
+     */
+    public void Reset(View v){
+        String base = "0";
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        String input3 = budget.getText().toString();
-        String input4 = inputvalue.getText().toString();
-        int temp3 = Integer.parseInt(input3);
-        int temp4 =Integer.parseInt(input4);
-        int result3 = temp3 - temp4;
-        String result4 = Integer.toString(result3);
-        editor.putString(budgetKey, result4);
+        editor.putString(budgetKey, base );
         editor.commit();
-        budget.setText(result4);
-        inputvalue.setText("");
-        Toast.makeText(this, "Budget updated", Toast.LENGTH_LONG).show();
-        return;
+        budget.setText(base);
+    }
+    //This final onclick function will reset the budget value when clicked.
 
-    }
-    }
+     
+}
